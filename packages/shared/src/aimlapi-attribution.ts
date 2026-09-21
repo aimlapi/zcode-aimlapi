@@ -4,7 +4,7 @@
 export const AIMLAPI_ATTRIBUTION_HEADERS = {
   "HTTP-Referer": "https://github.com/zai-org/ZCode",
   "X-Title": "ZCode",
-  "X-AIMLAPI-Partner-ID": "part_AIMLAPI_ZCODE_PLACEHOLDER",
+  "X-AIMLAPI-Partner-ID": "part_T2hR1Ms6R0yufWHxz7PQ15R7",
   "X-AIMLAPI-Source": "agent/zcode",
 } as const;
 

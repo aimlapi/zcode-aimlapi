@@ -7,7 +7,7 @@ import {
 } from "../src/aimlapi-attribution.js";
 
 test("partner id and source are in the shape the gateway accepts", () => {
-  assert.match(AIMLAPI_ATTRIBUTION_HEADERS["X-AIMLAPI-Partner-ID"], /^part_[A-Za-z0-9_]{1,64}$/);
+  assert.match(AIMLAPI_ATTRIBUTION_HEADERS["X-AIMLAPI-Partner-ID"], /^part_[A-Za-z0-9]{1,64}$/);
   assert.match(
     AIMLAPI_ATTRIBUTION_HEADERS["X-AIMLAPI-Source"],
     /^(web|agent|mcp)\/[a-z0-9-]{1,32}$/,
