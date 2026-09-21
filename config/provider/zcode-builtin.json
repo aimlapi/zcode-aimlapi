@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 30,
+  "revision": 31,
   "config": {
     "providerConfigRules": {
       "templateRules": [
@@ -481,6 +481,82 @@
             "logo": {
               "type": "builtin",
               "key": "openrouter"
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi-chat",
+          "templateNameMap": {
+            "zh-CN": "AI/ML API (Chat)",
+            "en-US": "AI/ML API (Chat)"
+          },
+          "config": {
+            "access": {
+              "type": "api-key",
+              "apiKeyManagementUrl": "https://aimlapi.com/app/keys"
+            },
+            "api": {
+              "type": "openai-chat-completions",
+              "baseUrl": "https://api.aimlapi.com/v1"
+            },
+            "builtinModelIds": [
+              "openai/gpt-6-astra",
+              "openai/gpt-5.6-sol",
+              "openai/gpt-5.6-terra",
+              "openai/gpt-5.6-luna",
+              "openai/gpt-5-5",
+              "openai/gpt-5.4-mini",
+              "openai/gpt-5.3-codex",
+              "anthropic/claude-fable-5.1",
+              "anthropic/claude-opus-5",
+              "anthropic/claude-sonnet-5",
+              "anthropic/claude-opus-4.8",
+              "anthropic/claude-sonnet-4.6",
+              "anthropic/claude-haiku-4.5",
+              "google/gemini-3.8-flash",
+              "google/gemini-3.7-flash",
+              "deepseek/deepseek-v4-pro",
+              "deepseek/deepseek-v4-flash",
+              "moonshot/kimi-k3",
+              "zhipu/glm-5.3",
+              "z-ai/glm-5.3-flash",
+              "alibaba/qwen3.8-max",
+              "minimax/minimax-m3",
+              "xiaomi/mimo-v2.5-pro"
+            ],
+            "logo": {
+              "type": "builtin",
+              "key": "aimlapi"
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi-messages",
+          "templateNameMap": {
+            "zh-CN": "AI/ML API (Messages)",
+            "en-US": "AI/ML API (Messages)"
+          },
+          "config": {
+            "access": {
+              "type": "api-key",
+              "apiKeyManagementUrl": "https://aimlapi.com/app/keys"
+            },
+            "api": {
+              "type": "anthropic-messages",
+              "baseUrl": "https://api.aimlapi.com"
+            },
+            "builtinModelIds": [
+              "anthropic/claude-fable-5.1",
+              "anthropic/claude-opus-5",
+              "anthropic/claude-sonnet-5",
+              "anthropic/claude-opus-4.8",
+              "anthropic/claude-opus-4.7",
+              "anthropic/claude-sonnet-4.6",
+              "anthropic/claude-haiku-4.5"
+            ],
+            "logo": {
+              "type": "builtin",
+              "key": "aimlapi"
             }
           }
         },
@@ -4309,6 +4385,844 @@
           "config": {
             "properties": {
               "supportsJsonSchemaOutput": true
+            }
+          }
+        },
+        {
+          "modelMatch": "openai/gpt-6-astra",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1050000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "openai/gpt-5\\.6-sol",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1050000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "openai/gpt-5\\.6-terra",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1050000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "openai/gpt-5\\.6-luna",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1050000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "openai/gpt-5-5",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1050000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "openai/gpt-5\\.4-mini",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 400000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "openai/gpt-5\\.3-codex",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 400000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-fable-5\\.1",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-opus-5",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-sonnet-5",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-opus-4\\.8",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-sonnet-4\\.6",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 200000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 64000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-haiku-4\\.5",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 200000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 64000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "google/gemini-3\\.8-flash",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1048576,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 65536,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "google/gemini-3\\.7-flash",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1048576,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 65536,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "deepseek/deepseek-v4-pro",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": false,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 384000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "deepseek/deepseek-v4-flash",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": false,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 384000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "moonshot/kimi-k3",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1048576,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "reasoningLevel": {
+                "values": ["disabled", "low", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "zhipu/glm-5\\.3",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1024000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": false,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 131072,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "z-ai/glm-5\\.3-flash",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1048576,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 131072,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "alibaba/qwen3\\.8-max",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 131072,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "minimax/minimax-m3",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 524288,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 524288,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high", "max"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "xiaomi/mimo-v2\\.5-pro",
+          "apiTypeMatch": "openai-chat-completions",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/v1/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": false,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": true
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              },
+              "reasoningLevel": {
+                "values": ["disabled", "low", "medium", "high"],
+                "map": "reasoningLevel == \"disabled\" ? {\"reasoning_effort\": \"none\"} : {\"reasoning_effort\": reasoningLevel}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-fable-5\\.1",
+          "apiTypeMatch": "anthropic-messages",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": false
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-opus-5",
+          "apiTypeMatch": "anthropic-messages",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": false
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-sonnet-5",
+          "apiTypeMatch": "anthropic-messages",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": false
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-opus-4\\.8",
+          "apiTypeMatch": "anthropic-messages",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": false
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-opus-4\\.7",
+          "apiTypeMatch": "anthropic-messages",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": false
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 128000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-sonnet-4\\.6",
+          "apiTypeMatch": "anthropic-messages",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 200000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": false
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 64000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "modelMatch": "anthropic/claude-haiku-4\\.5",
+          "apiTypeMatch": "anthropic-messages",
+          "baseUrlMatch": "https://api\\.aimlapi\\.com/?",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 200000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsJsonSchemaOutput": false
+            },
+            "optionSpecs": {
+              "maxOutputTokens": {
+                "max": 64000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
             }
           }
         }

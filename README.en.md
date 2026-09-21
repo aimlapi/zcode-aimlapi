@@ -130,6 +130,12 @@ The root [.env.example](.env.example) provides sample service URLs and build con
 
 Runtime variables can be set explicitly in the environment of the startup command. See [config/README.md](config/README.md) for the default configuration shipped with the client.
 
+### AI/ML API
+
+This fork ships [AI/ML API](https://aimlapi.com) as two built-in provider templates in `config/provider/zcode-builtin.json`: **AI/ML API (Chat)** on `https://api.aimlapi.com/v1` (OpenAI chat completions, 23 curated models across OpenAI, Anthropic, Google, DeepSeek, Moonshot, Z.ai, Qwen, MiniMax and Xiaomi) and **AI/ML API (Messages)** on `https://api.aimlapi.com` (Anthropic messages, Claude models). Pick one in Settings → Model Providers and paste a key from https://aimlapi.com/app/keys. Per-model context windows, output limits, image input and the `reasoning_effort` levels each model accepts were measured against the gateway on 2026-09-21.
+
+Requests whose base URL host is exactly `api.aimlapi.com` carry `X-AIMLAPI-Source: agent/zcode` and `X-AIMLAPI-Partner-ID` so the gateway can attribute ZCode traffic; a proxy or any other host gets neither (`packages/shared/src/aimlapi-attribution.ts`). Note that the built-in config is also refreshed from Z.ai's remote release channel at runtime; a newer official revision replaces the bundled file, templates included.
+
 ## Packaging
 
 See [third-party/README.md](third-party/README.md) for notice generation, distribution checks, and where the notices are included in each distribution.

@@ -19,7 +19,7 @@ import {
   type ModelRequestAuth,
 } from "@zcode/contracts";
 import type { RegistryProviderConfig } from "@zcode/provider";
-import { withOpenRouterAttributionHeaders } from "@zcode/shared";
+import { withAimlapiAttributionHeaders, withOpenRouterAttributionHeaders } from "@zcode/shared";
 import { createAnthropicCompatFetch } from "./anthropic-stream-compat.js";
 import { createOpenAIResponsesJsonCompatFetch } from "./openai-responses-json-compat.js";
 import { createModelOptionMapFetch, type RawRequestBodyCapture } from "./model-option-map-fetch.js";
@@ -202,8 +202,13 @@ export class AiSdkModelExecution {
     const configuredProvider = toAiSdkProviderConfig(input.providerId, input.providerConfig);
     // 重构后模型 SDK 曾只接到用户 Header，漏掉版本和站点归因；在公共绑定边界恢复，
     // 不依赖签名成功，不给各业务重复补头，也不修改 Provider 或已绑定 Model 的配置。
+    // AI/ML API 与 OpenRouter 同样在此处按目标主机补归因头：
+    // 只看请求真正发往的 baseURL，用户改成代理或其他域名时不会带上。
     configuredProvider.headers = mergeModelRequestHeaders(
-      withOpenRouterAttributionHeaders(this.defaultHeaders, configuredProvider.baseURL),
+      withAimlapiAttributionHeaders(
+        withOpenRouterAttributionHeaders(this.defaultHeaders, configuredProvider.baseURL),
+        configuredProvider.baseURL,
+      ),
       configuredProvider.headers,
     );
     const apiKey = this.resolveApiKey(configuredProvider);

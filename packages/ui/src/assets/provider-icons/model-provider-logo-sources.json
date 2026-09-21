@@ -3,6 +3,14 @@
   "reviewedAt": "2026-09-02",
   "logos": [
     {
+      "brand": "AI/ML API",
+      "file": "model-provider-aimlapi.svg",
+      "providerIds": ["aimlapi-chat", "aimlapi-messages"],
+      "sourceUrl": "https://aimlapi.com",
+      "sourceOwner": "AI/ML API",
+      "normalization": "Square SVG mark supplied by AI/ML API, unchanged; used for both themes. Added 2026-09-21."
+    },
+    {
       "brand": "OpenRouter",
       "file": "model-provider-openrouter-light.svg",
       "darkFile": "model-provider-openrouter-dark.svg",
