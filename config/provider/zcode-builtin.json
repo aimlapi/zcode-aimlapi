@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 31,
+  "revision": 32,
   "config": {
     "providerConfigRules": {
       "templateRules": [
@@ -139,6 +139,82 @@
             "logo": {
               "type": "builtin",
               "key": "bigmodel"
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi-chat",
+          "templateNameMap": {
+            "zh-CN": "AI/ML API (Chat)",
+            "en-US": "AI/ML API (Chat)"
+          },
+          "config": {
+            "access": {
+              "type": "api-key",
+              "apiKeyManagementUrl": "https://aimlapi.com/app/keys"
+            },
+            "api": {
+              "type": "openai-chat-completions",
+              "baseUrl": "https://api.aimlapi.com/v1"
+            },
+            "builtinModelIds": [
+              "openai/gpt-6-astra",
+              "openai/gpt-5.6-sol",
+              "openai/gpt-5.6-terra",
+              "openai/gpt-5.6-luna",
+              "openai/gpt-5-5",
+              "openai/gpt-5.4-mini",
+              "openai/gpt-5.3-codex",
+              "anthropic/claude-fable-5.1",
+              "anthropic/claude-opus-5",
+              "anthropic/claude-sonnet-5",
+              "anthropic/claude-opus-4.8",
+              "anthropic/claude-sonnet-4.6",
+              "anthropic/claude-haiku-4.5",
+              "google/gemini-3.8-flash",
+              "google/gemini-3.7-flash",
+              "deepseek/deepseek-v4-pro",
+              "deepseek/deepseek-v4-flash",
+              "moonshot/kimi-k3",
+              "zhipu/glm-5.3",
+              "z-ai/glm-5.3-flash",
+              "alibaba/qwen3.8-max",
+              "minimax/minimax-m3",
+              "xiaomi/mimo-v2.5-pro"
+            ],
+            "logo": {
+              "type": "builtin",
+              "key": "aimlapi"
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi-messages",
+          "templateNameMap": {
+            "zh-CN": "AI/ML API (Messages)",
+            "en-US": "AI/ML API (Messages)"
+          },
+          "config": {
+            "access": {
+              "type": "api-key",
+              "apiKeyManagementUrl": "https://aimlapi.com/app/keys"
+            },
+            "api": {
+              "type": "anthropic-messages",
+              "baseUrl": "https://api.aimlapi.com"
+            },
+            "builtinModelIds": [
+              "anthropic/claude-fable-5.1",
+              "anthropic/claude-opus-5",
+              "anthropic/claude-sonnet-5",
+              "anthropic/claude-opus-4.8",
+              "anthropic/claude-opus-4.7",
+              "anthropic/claude-sonnet-4.6",
+              "anthropic/claude-haiku-4.5"
+            ],
+            "logo": {
+              "type": "builtin",
+              "key": "aimlapi"
             }
           }
         },
@@ -481,82 +557,6 @@
             "logo": {
               "type": "builtin",
               "key": "openrouter"
-            }
-          }
-        },
-        {
-          "templateId": "aimlapi-chat",
-          "templateNameMap": {
-            "zh-CN": "AI/ML API (Chat)",
-            "en-US": "AI/ML API (Chat)"
-          },
-          "config": {
-            "access": {
-              "type": "api-key",
-              "apiKeyManagementUrl": "https://aimlapi.com/app/keys"
-            },
-            "api": {
-              "type": "openai-chat-completions",
-              "baseUrl": "https://api.aimlapi.com/v1"
-            },
-            "builtinModelIds": [
-              "openai/gpt-6-astra",
-              "openai/gpt-5.6-sol",
-              "openai/gpt-5.6-terra",
-              "openai/gpt-5.6-luna",
-              "openai/gpt-5-5",
-              "openai/gpt-5.4-mini",
-              "openai/gpt-5.3-codex",
-              "anthropic/claude-fable-5.1",
-              "anthropic/claude-opus-5",
-              "anthropic/claude-sonnet-5",
-              "anthropic/claude-opus-4.8",
-              "anthropic/claude-sonnet-4.6",
-              "anthropic/claude-haiku-4.5",
-              "google/gemini-3.8-flash",
-              "google/gemini-3.7-flash",
-              "deepseek/deepseek-v4-pro",
-              "deepseek/deepseek-v4-flash",
-              "moonshot/kimi-k3",
-              "zhipu/glm-5.3",
-              "z-ai/glm-5.3-flash",
-              "alibaba/qwen3.8-max",
-              "minimax/minimax-m3",
-              "xiaomi/mimo-v2.5-pro"
-            ],
-            "logo": {
-              "type": "builtin",
-              "key": "aimlapi"
-            }
-          }
-        },
-        {
-          "templateId": "aimlapi-messages",
-          "templateNameMap": {
-            "zh-CN": "AI/ML API (Messages)",
-            "en-US": "AI/ML API (Messages)"
-          },
-          "config": {
-            "access": {
-              "type": "api-key",
-              "apiKeyManagementUrl": "https://aimlapi.com/app/keys"
-            },
-            "api": {
-              "type": "anthropic-messages",
-              "baseUrl": "https://api.aimlapi.com"
-            },
-            "builtinModelIds": [
-              "anthropic/claude-fable-5.1",
-              "anthropic/claude-opus-5",
-              "anthropic/claude-sonnet-5",
-              "anthropic/claude-opus-4.8",
-              "anthropic/claude-opus-4.7",
-              "anthropic/claude-sonnet-4.6",
-              "anthropic/claude-haiku-4.5"
-            ],
-            "logo": {
-              "type": "builtin",
-              "key": "aimlapi"
             }
           }
         },
