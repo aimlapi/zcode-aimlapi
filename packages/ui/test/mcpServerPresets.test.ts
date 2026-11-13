@@ -8,6 +8,7 @@ import {
   formToConfig,
   formToJsonDraft,
   MCP_SERVER_PRESETS,
+  pendingMcpServerPresets,
   type FormState,
 } from "../src/settings/mcpSettingsShared.js";
 
@@ -79,4 +80,46 @@ test("the preset object is not mutated by applying it", () => {
   const form = applyMcpServerPreset({ ...EMPTY_FORM }, preset);
   form.url = "https://changed.example";
   assert.equal(preset.form.url, "https://mcp.aimlapi.com/mcp");
+});
+
+const server = (name: string, url?: string) => ({ name, config: url ? { url } : {} });
+
+test("the list offers the preset while nothing like it is configured", () => {
+  assert.deepEqual(
+    pendingMcpServerPresets(MCP_SERVER_PRESETS, [
+      server("github", "https://api.githubcopilot.com/mcp"),
+    ]).map((p) => p.id),
+    ["aimlapi"],
+  );
+  assert.deepEqual(
+    pendingMcpServerPresets(MCP_SERVER_PRESETS, []).map((p) => p.id),
+    ["aimlapi"],
+  );
+});
+
+test("the preset disappears once a server with its name or its URL exists", () => {
+  assert.deepEqual(pendingMcpServerPresets(MCP_SERVER_PRESETS, [server("aimlapi")]), []);
+  assert.deepEqual(
+    pendingMcpServerPresets(MCP_SERVER_PRESETS, [
+      server("my-gateway", "https://MCP.aimlapi.com/mcp/"),
+    ]),
+    [],
+  );
+});
+
+test("a look-alike URL does not hide the preset", () => {
+  assert.equal(
+    pendingMcpServerPresets(MCP_SERVER_PRESETS, [
+      server("x", "https://mcp.aimlapi.com.example.test/mcp"),
+      server("y", "https://proxy.example/mcp.aimlapi.com/mcp"),
+    ]).length,
+    1,
+  );
+});
+
+test("search narrows presets by label, name or URL", () => {
+  assert.equal(pendingMcpServerPresets(MCP_SERVER_PRESETS, [], "AI/ML").length, 1);
+  assert.equal(pendingMcpServerPresets(MCP_SERVER_PRESETS, [], "aimlapi").length, 1);
+  assert.equal(pendingMcpServerPresets(MCP_SERVER_PRESETS, [], "mcp.aimlapi.com").length, 1);
+  assert.equal(pendingMcpServerPresets(MCP_SERVER_PRESETS, [], "notion").length, 0);
 });

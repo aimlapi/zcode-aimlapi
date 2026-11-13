@@ -79,6 +79,44 @@ export function applyMcpServerPreset(form: FormState, preset: McpServerPreset): 
   };
 }
 
+// URL 按协议 + 主机 + 去掉末尾斜杠的路径比较；相似域名或把主机名放进路径的代理不算同一个 server。
+function sameMcpUrl(left: string | undefined, right: string): boolean {
+  if (!left) return false;
+  try {
+    const a = new URL(left.trim());
+    const b = new URL(right);
+    const path = (url: URL) => url.pathname.replace(/\/+$/, "");
+    return (
+      a.protocol === b.protocol &&
+      a.hostname.toLowerCase() === b.hostname.toLowerCase() &&
+      a.port === b.port &&
+      path(a) === path(b)
+    );
+  } catch {
+    return false;
+  }
+}
+
+// 列表页「预设」分组要展示的预设：同名或同 URL 的 server 已存在就不再推荐；搜索词按名称/标签/URL 过滤。
+export function pendingMcpServerPresets(
+  presets: readonly McpServerPreset[],
+  servers: readonly { name: string; config: { url?: string } }[],
+  query = "",
+): McpServerPreset[] {
+  const needle = query.trim().toLowerCase();
+  return presets.filter((preset) => {
+    const installed = servers.some(
+      (server) =>
+        server.name === preset.form.name || sameMcpUrl(server.config.url, preset.form.url),
+    );
+    if (installed) return false;
+    if (!needle) return true;
+    return [preset.label, preset.form.name, preset.form.url].some((value) =>
+      value.toLowerCase().includes(needle),
+    );
+  });
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }

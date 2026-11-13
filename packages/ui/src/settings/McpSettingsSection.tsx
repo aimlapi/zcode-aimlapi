@@ -37,11 +37,17 @@ import { logger } from "@/logger.js";
 import { McpServerForm } from "@/settings/McpServerForm.js";
 import { McpServerList, McpStatusDot } from "@/settings/McpServerList.js";
 import {
+  applyMcpServerPreset,
+  EMPTY_FORM,
   formToConfig,
+  MCP_SERVER_PRESETS,
+  pendingMcpServerPresets,
   type FormState,
   type McpEditorMode,
+  type McpServerPreset,
   type ServerScope,
 } from "@/settings/mcpSettingsShared.js";
+import aimlapiLogo from "@/assets/provider-icons/model-provider-aimlapi.svg";
 import { SettingsBreadcrumbReporter } from "@/settings/SettingsHeaderBreadcrumb.js";
 import { SettingsResourceHeaderActions } from "@/settings/SettingsResourceHeaderActions.js";
 import { PluginStoreAvatar } from "@/settings/PluginStoreAvatar.js";
@@ -426,6 +432,63 @@ export function buildPendingMcpOAuthAuthorizationRefreshKey(
     .filter(([, snapshot]) => Boolean(snapshot.authorization?.authorizationUrl))
     .map(([serverName, snapshot]) => `${serverName}:${snapshot.authorization?.startedAt ?? ""}`);
   return Array.from(new Set([...localPendingKeys, ...runtimePendingKeys])).join("|");
+}
+
+const MCP_PRESET_LOGOS: Readonly<Record<string, string>> = { aimlapi: aimlapiLogo };
+
+// 预设分组：每个预设一行，点「添加」直接写入用户级配置，之后作为普通已安装 server 出现在上方。
+function McpPresetList({
+  presets,
+  onAdd,
+}: {
+  presets: readonly McpServerPreset[];
+  onAdd: (preset: McpServerPreset) => void;
+}) {
+  const { intl } = useZCodeIntl();
+  return (
+    <SettingsResourceList
+      items={[...presets]}
+      getKey={(preset) => preset.id}
+      renderItem={(preset) => {
+        const logo = MCP_PRESET_LOGOS[preset.id];
+        return (
+          <div
+            className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 transition-colors hover:bg-hover"
+            data-mcp-preset={preset.id}
+          >
+            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-background">
+              {logo ? <img src={logo} alt="" className="size-9" /> : null}
+            </div>
+            <div className="min-w-0">
+              <div className="truncate text-ui-base font-medium text-foreground">
+                {preset.label}
+              </div>
+              <div className="mt-0.5 truncate text-ui-sm text-foreground-subtle">
+                {preset.form.url}
+              </div>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                onClick={() => window.open(preset.docsUrl, "_blank", "noopener,noreferrer")}
+              >
+                <ExternalLink className="size-4" aria-hidden="true" />
+                <span className="hidden sm:inline">
+                  {intl.formatMessage({ id: "settings.mcp.presets.docs" })}
+                </span>
+              </Button>
+              <Button type="button" variant="outline" size="sm" onClick={() => onAdd(preset)}>
+                <Plus data-icon="inline-start" aria-hidden="true" />
+                {intl.formatMessage({ id: "settings.mcp.presets.add" })}
+              </Button>
+            </div>
+          </div>
+        );
+      }}
+    />
+  );
 }
 
 function PluginMcpServerList({
@@ -1215,7 +1278,12 @@ export function McpSettingsSection({
   const mcpProjectionReady =
     !activeWorkspacePath ||
     (mcpStoreMatchesActiveWorkspace && mcpConfigReadyWorkspaceKey === activeWorkspaceKey);
-  const hasEmptySearchResult = Boolean(query.trim()) && filteredMcpCount === 0;
+  // 预设写入本机用户目录，远端设置页与插件 MCP 一样不展示。
+  const pendingPresets = shouldShowPluginMcpServersInMcpSettings(isRemoteSyncContext)
+    ? pendingMcpServerPresets(MCP_SERVER_PRESETS, servers, query)
+    : [];
+  const hasEmptySearchResult =
+    Boolean(query.trim()) && filteredMcpCount + pendingPresets.length === 0;
   const installedServers = useMemo(
     () =>
       filteredServers
@@ -1383,6 +1451,24 @@ export function McpSettingsSection({
     setShowForm(false);
     setEditingServer(null);
     onFormScopeKeyChange?.(null);
+  }
+
+  async function handleAddPreset(preset: McpServerPreset) {
+    if (!activeWorkspacePath) {
+      return;
+    }
+    const loaded = await ensureLoadedForWorkspace(
+      activeWorkspacePath,
+      services.mcpSyncService,
+      activeWorkspaceIdentity,
+      cacheAuthorityKey,
+    );
+    if (!loaded) {
+      return;
+    }
+    const form = applyMcpServerPreset({ ...EMPTY_FORM, storageLevel: "user" }, preset);
+    // 用户级（projectPath 为空），与新建表单默认的「用户」范围一致。
+    await addScopedMcpServer(DEFAULT_MCP_SOURCE, form.name, formToConfig(form), undefined);
   }
 
   async function handleDelete(server: ZCodeMcpServer) {
@@ -1647,6 +1733,18 @@ export function McpSettingsSection({
             />
           ) : null}
         </section>
+        {pendingPresets.length > 0 ? (
+          <section className="space-y-4" data-mcp-plugin-group="presets">
+            <SettingsResourceGroupHeader
+              count={pendingPresets.length}
+              title={intl.formatMessage({ id: "settings.mcp.presets.title" })}
+            />
+            <McpPresetList
+              presets={pendingPresets}
+              onAdd={(preset) => void handleAddPreset(preset)}
+            />
+          </section>
+        ) : null}
         {pluginMcpGroups.map((group) => (
           <section
             key={group.pluginId}
