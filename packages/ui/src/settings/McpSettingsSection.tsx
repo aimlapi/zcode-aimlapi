@@ -436,57 +436,70 @@ export function buildPendingMcpOAuthAuthorizationRefreshKey(
 
 const MCP_PRESET_LOGOS: Readonly<Record<string, string>> = { aimlapi: aimlapiLogo };
 
-// 预设分组：每个预设一行，点「添加」直接写入用户级配置，之后作为普通已安装 server 出现在上方。
-function McpPresetList({
-  presets,
+// 预设按插件分组的样式展示：分组标题为预设名称，一行带品牌图标；点「添加」写入当前查看的范围，
+// 之后作为普通已安装 server 出现在上方，预设行随之隐藏。
+function McpPresetRow({
+  preset,
   onAdd,
 }: {
-  presets: readonly McpServerPreset[];
+  preset: McpServerPreset;
   onAdd: (preset: McpServerPreset) => void;
 }) {
   const { intl } = useZCodeIntl();
+  const logo = MCP_PRESET_LOGOS[preset.id];
+  const description = intl.formatMessage({ id: "settings.mcp.presets.description" });
   return (
     <SettingsResourceList
-      items={[...presets]}
-      getKey={(preset) => preset.id}
-      renderItem={(preset) => {
-        const logo = MCP_PRESET_LOGOS[preset.id];
-        return (
-          <div
-            className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 transition-colors hover:bg-hover"
-            data-mcp-preset={preset.id}
-          >
-            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-background">
-              {logo ? <img src={logo} alt="" className="size-9" /> : null}
+      items={[preset]}
+      getKey={(item) => item.id}
+      renderItem={(item) => (
+        <div
+          className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 transition-colors hover:bg-hover"
+          data-mcp-preset={item.id}
+        >
+          <div className="relative size-9 shrink-0" data-mcp-status-dot-placement="icon-corner">
+            <span
+              aria-hidden="true"
+              className="flex size-9 shrink-0 select-none items-center justify-center overflow-hidden rounded-xl bg-background"
+            >
+              {logo ? (
+                <img src={logo} alt="" draggable={false} className="size-full object-contain" />
+              ) : null}
+            </span>
+            <span className="absolute -right-1 -bottom-1 flex size-4 items-center justify-center rounded-full bg-background">
+              <McpStatusDot disabled reason={description} />
+            </span>
+          </div>
+          <div className="min-w-0">
+            <div className="truncate text-ui-base font-medium text-foreground">
+              {item.form.name}
             </div>
-            <div className="min-w-0">
-              <div className="truncate text-ui-base font-medium text-foreground">
-                {preset.label}
-              </div>
-              <div className="mt-0.5 truncate text-ui-sm text-foreground-subtle">
-                {preset.form.url}
-              </div>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <Button
-                type="button"
-                variant="link"
-                size="sm"
-                onClick={() => window.open(preset.docsUrl, "_blank", "noopener,noreferrer")}
-              >
-                <ExternalLink className="size-4" aria-hidden="true" />
-                <span className="hidden sm:inline">
-                  {intl.formatMessage({ id: "settings.mcp.presets.docs" })}
-                </span>
-              </Button>
-              <Button type="button" variant="outline" size="sm" onClick={() => onAdd(preset)}>
-                <Plus data-icon="inline-start" aria-hidden="true" />
-                {intl.formatMessage({ id: "settings.mcp.presets.add" })}
-              </Button>
+            <div
+              className="mt-0.5 truncate text-ui-sm text-foreground-subtle"
+              title={item.form.url}
+            >
+              {description}
             </div>
           </div>
-        );
-      }}
+          <div className="flex shrink-0 items-center gap-2">
+            <Button
+              type="button"
+              variant="link"
+              size="sm"
+              onClick={() => window.open(item.docsUrl, "_blank", "noopener,noreferrer")}
+            >
+              <ExternalLink className="size-4" aria-hidden="true" />
+              <span className="hidden sm:inline">
+                {intl.formatMessage({ id: "settings.mcp.presets.docs" })}
+              </span>
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={() => onAdd(item)}>
+              <Plus data-icon="inline-start" aria-hidden="true" />
+              {intl.formatMessage({ id: "settings.mcp.presets.add" })}
+            </Button>
+          </div>
+        </div>
+      )}
     />
   );
 }
@@ -1280,7 +1293,7 @@ export function McpSettingsSection({
     (mcpStoreMatchesActiveWorkspace && mcpConfigReadyWorkspaceKey === activeWorkspaceKey);
   // 预设写入本机用户目录，远端设置页与插件 MCP 一样不展示。
   const pendingPresets = shouldShowPluginMcpServersInMcpSettings(isRemoteSyncContext)
-    ? pendingMcpServerPresets(MCP_SERVER_PRESETS, servers, query)
+    ? pendingMcpServerPresets(MCP_SERVER_PRESETS, scopedServers, query)
     : [];
   const hasEmptySearchResult =
     Boolean(query.trim()) && filteredMcpCount + pendingPresets.length === 0;
@@ -1466,9 +1479,11 @@ export function McpSettingsSection({
     if (!loaded) {
       return;
     }
-    const form = applyMcpServerPreset({ ...EMPTY_FORM, storageLevel: "user" }, preset);
-    // 用户级（projectPath 为空），与新建表单默认的「用户」范围一致。
-    await addScopedMcpServer(DEFAULT_MCP_SOURCE, form.name, formToConfig(form), undefined);
+    // 写入页面当前查看的范围：只按当前范围判断是否已安装，添加也落在同一范围，
+    // 否则在「用户」页看不到工作区里的同名 server，预设却被隐藏（反之亦然）。
+    const form = applyMcpServerPreset({ ...EMPTY_FORM, storageLevel: scopeFilter }, preset);
+    const projectPath = scopeFilter === "user" ? undefined : activeWorkspacePath;
+    await addScopedMcpServer(DEFAULT_MCP_SOURCE, form.name, formToConfig(form), projectPath);
   }
 
   async function handleDelete(server: ZCodeMcpServer) {
@@ -1733,18 +1748,16 @@ export function McpSettingsSection({
             />
           ) : null}
         </section>
-        {pendingPresets.length > 0 ? (
-          <section className="space-y-4" data-mcp-plugin-group="presets">
-            <SettingsResourceGroupHeader
-              count={pendingPresets.length}
-              title={intl.formatMessage({ id: "settings.mcp.presets.title" })}
-            />
-            <McpPresetList
-              presets={pendingPresets}
-              onAdd={(preset) => void handleAddPreset(preset)}
-            />
+        {pendingPresets.map((preset) => (
+          <section
+            key={preset.id}
+            className="space-y-4"
+            data-mcp-plugin-group={`preset:${preset.id}`}
+          >
+            <SettingsResourceGroupHeader count={1} title={preset.label} />
+            <McpPresetRow preset={preset} onAdd={(item) => void handleAddPreset(item)} />
           </section>
-        ) : null}
+        ))}
         {pluginMcpGroups.map((group) => (
           <section
             key={group.pluginId}

@@ -4138,8 +4138,8 @@ const jaJP: Record<string, string> = {
   "settings.mcp.form.pasteHintSuffix": "。",
   "settings.mcp.form.name": "名前",
   "settings.mcp.form.type": "種類",
-  "settings.mcp.form.presets": "プリセット",
-  "settings.mcp.presets.title": "プリセット",
+  "settings.mcp.presets.description":
+    "プリセット：AI/ML API のホスト型 MCP サーバー。追加すると接続できます。",
   "settings.mcp.presets.add": "追加",
   "settings.mcp.presets.docs": "ドキュメント",
   "settings.mcp.form.timeoutMs": "タイムアウト（ミリ秒）",

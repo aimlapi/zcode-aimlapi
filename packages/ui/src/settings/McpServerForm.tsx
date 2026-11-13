@@ -16,10 +16,8 @@ import { SettingsFormTextarea } from "@/settings/SettingsFormTextarea.js";
 import { SettingsFormActions } from "@/settings/SettingsFormActions.js";
 import { ChevronDown, ChevronUpIcon as ChevronUp, Trash2 } from "lucide-react";
 import {
-  applyMcpServerPreset,
   EMPTY_FORM,
   formToJsonDraft,
-  MCP_SERVER_PRESETS,
   jsonDraftToForm,
   serverToForm,
   type FormState,
@@ -215,25 +213,6 @@ export function McpServerForm({
 
   return (
     <div className="space-y-4 rounded-xl border border-border p-4">
-      {!initial && MCP_SERVER_PRESETS.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-ui-base text-foreground-subtle">
-            {intl.formatMessage({ id: "settings.mcp.form.presets" })}
-          </span>
-          {MCP_SERVER_PRESETS.map((preset) => (
-            <Button
-              key={preset.id}
-              type="button"
-              variant="outline"
-              size="sm"
-              title={preset.form.url}
-              onClick={() => update(applyMcpServerPreset(formRef.current, preset))}
-            >
-              {preset.label}
-            </Button>
-          ))}
-        </div>
-      )}
       {editorMode === "json" ? (
         <div className="space-y-3">
           <div className="flex justify-end">{scopeSelect}</div>

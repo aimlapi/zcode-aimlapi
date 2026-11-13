@@ -4113,8 +4113,8 @@ const ruRU: Record<string, string> = {
   "settings.mcp.form.pasteHintSuffix": ".",
   "settings.mcp.form.name": "Имя",
   "settings.mcp.form.type": "Тип",
-  "settings.mcp.form.presets": "Пресеты",
-  "settings.mcp.presets.title": "Пресеты",
+  "settings.mcp.presets.description":
+    "Пресет: облачный MCP-сервер AI/ML API. Добавьте, чтобы подключить.",
   "settings.mcp.presets.add": "Добавить",
   "settings.mcp.presets.docs": "Документация",
   "settings.mcp.form.timeoutMs": "Таймаут, мс",
