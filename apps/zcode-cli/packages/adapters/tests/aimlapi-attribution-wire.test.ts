@@ -99,27 +99,32 @@ describe("AI/ML API attribution on the wire", () => {
     expect(request.headers.get("x-aimlapi-source")).toBe("agent/custom");
   });
 
-  it("both bundled templates point at the exact gateway host and get attribution", async () => {
-    const builtin = JSON.parse(
-      readFileSync(
-        new URL("../../../../../config/provider/zcode-builtin.json", import.meta.url),
-        "utf8",
-      ),
-    ) as {
-      config: {
-        providerConfigRules: {
-          templateRules: { templateId: string; config: { api: { type: ApiType; baseUrl: string } } }[];
+  // Production builds bundle zcode-builtin.json, every other build zcode-builtin.test.json
+  // (scripts/builtin-provider-config.mjs), so both must carry the templates, like OpenRouter.
+  it.each(["zcode-builtin.json", "zcode-builtin.test.json"])(
+    "both templates in %s point at the exact gateway host and get attribution",
+    async (file) => {
+      const builtin = JSON.parse(
+        readFileSync(new URL(`../../../../../config/provider/${file}`, import.meta.url), "utf8"),
+      ) as {
+        config: {
+          providerConfigRules: {
+            templateRules: {
+              templateId: string;
+              config: { api: { type: ApiType; baseUrl: string } };
+            }[];
+          };
         };
       };
-    };
-    const templates = builtin.config.providerConfigRules.templateRules.filter((t) =>
-      t.templateId.startsWith("aimlapi-"),
-    );
-    expect(templates.map((t) => t.templateId)).toEqual(["aimlapi-chat", "aimlapi-messages"]);
-    for (const { config } of templates) {
-      expect(new URL(config.api.baseUrl).hostname).toBe("api.aimlapi.com");
-      const request = await send(config.api.baseUrl, config.api.type);
-      expect(request.headers.get("x-aimlapi-source")).toBe("agent/zcode");
-    }
-  });
+      const templates = builtin.config.providerConfigRules.templateRules.filter((t) =>
+        t.templateId.startsWith("aimlapi-"),
+      );
+      expect(templates.map((t) => t.templateId)).toEqual(["aimlapi-chat", "aimlapi-messages"]);
+      for (const { config } of templates) {
+        expect(new URL(config.api.baseUrl).hostname).toBe("api.aimlapi.com");
+        const request = await send(config.api.baseUrl, config.api.type);
+        expect(request.headers.get("x-aimlapi-source")).toBe("agent/zcode");
+      }
+    },
+  );
 });
