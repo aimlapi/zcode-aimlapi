@@ -8,6 +8,7 @@ import {
   formToConfig,
   formToJsonDraft,
   MCP_SERVER_PRESETS,
+  mcpServerPresetForUrl,
   pendingMcpServerPresets,
   type FormState,
 } from "../src/settings/mcpSettingsShared.js";
@@ -122,4 +123,24 @@ test("search narrows presets by label, name or URL", () => {
   assert.equal(pendingMcpServerPresets(MCP_SERVER_PRESETS, [], "aimlapi").length, 1);
   assert.equal(pendingMcpServerPresets(MCP_SERVER_PRESETS, [], "mcp.aimlapi.com").length, 1);
   assert.equal(pendingMcpServerPresets(MCP_SERVER_PRESETS, [], "notion").length, 0);
+});
+
+test("an installed server on the preset URL is recognised as the preset (for its logo)", () => {
+  assert.equal(mcpServerPresetForUrl("https://mcp.aimlapi.com/mcp")?.id, "aimlapi");
+  assert.equal(mcpServerPresetForUrl("https://MCP.AIMLAPI.COM/mcp/")?.id, "aimlapi");
+});
+
+test("only the exact preset URL gets the preset logo, never the name or a look-alike", () => {
+  for (const url of [
+    undefined,
+    "",
+    "not a url",
+    "http://mcp.aimlapi.com/mcp",
+    "https://mcp.aimlapi.com.example.test/mcp",
+    "https://proxy.example/mcp.aimlapi.com/mcp",
+    "https://api.aimlapi.com/mcp",
+    "https://mcp.aimlapi.com/other",
+  ]) {
+    assert.equal(mcpServerPresetForUrl(url), undefined, String(url));
+  }
 });

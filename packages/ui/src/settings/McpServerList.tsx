@@ -17,6 +17,25 @@ import {
 import { SettingsResourceList } from "@/settings/SettingsResourceGroup.js";
 import { runUserAction } from "@/lib/userActionTelemetry.js";
 import { CircleIcon, Cable, LoaderCircle, ExternalLink, Plus } from "lucide-react";
+import aimlapiLogo from "@/assets/provider-icons/model-provider-aimlapi.svg";
+import { mcpServerPresetForUrl } from "@/settings/mcpSettingsShared.js";
+
+const MCP_PRESET_LOGOS: Readonly<Record<string, string>> = { aimlapi: aimlapiLogo };
+
+// 预设的品牌图标（填满 size-9 圆角框）；没有对应图标时返回 null，由调用方退回通用图标。
+// 已安装 server 的 URL 与预设一致时也用它，而不是通用 Cable 图标。
+export function McpPresetIcon({ presetId }: { presetId: string | undefined }) {
+  const logo = presetId ? MCP_PRESET_LOGOS[presetId] : undefined;
+  if (!logo) return null;
+  return (
+    <span
+      aria-hidden="true"
+      className="flex size-9 shrink-0 select-none overflow-hidden rounded-xl"
+    >
+      <img src={logo} alt="" draggable={false} className="size-full object-contain" />
+    </span>
+  );
+}
 
 export function McpStatusDot({
   status,
@@ -109,6 +128,8 @@ function McpServerItem({
           ? `${typeLabel} · ${server.config.command} ${(server.config.args ?? []).join(" ")}`
           : typeLabel;
 
+  const presetId = mcpServerPresetForUrl(server.config.url)?.id;
+
   return (
     <div
       className={`grid cursor-default ${server.scope === "workspace" && onTrust ? "grid-cols-[auto_minmax(0,1fr)] sm:grid-cols-[auto_minmax(0,1fr)_auto]" : "grid-cols-[auto_minmax(0,1fr)_auto]"} items-center gap-3 px-4 py-3 transition-colors ${canEdit ? "hover:bg-hover" : ""}`}
@@ -121,7 +142,11 @@ function McpServerItem({
         className="relative flex size-9 shrink-0 items-center justify-center rounded-xl bg-background text-foreground-subtle"
         data-mcp-status-dot-placement="icon-corner"
       >
-        <Cable className="size-4" aria-hidden="true" />
+        {presetId ? (
+          <McpPresetIcon presetId={presetId} />
+        ) : (
+          <Cable className="size-4" aria-hidden="true" />
+        )}
         <span className="absolute -right-1 -bottom-1 flex size-4 items-center justify-center rounded-full bg-background">
           <McpStatusDot status={server.status} reason={statusReason} />
         </span>

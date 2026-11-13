@@ -97,6 +97,14 @@ function sameMcpUrl(left: string | undefined, right: string): boolean {
   }
 }
 
+// 已安装 server 是否就是某个预设：只按 URL 判断（不看名称），用于在已安装列表里显示预设的品牌图标。
+export function mcpServerPresetForUrl(
+  url: string | undefined,
+  presets: readonly McpServerPreset[] = MCP_SERVER_PRESETS,
+): McpServerPreset | undefined {
+  return presets.find((preset) => sameMcpUrl(url, preset.form.url));
+}
+
 // 列表页「预设」分组要展示的预设：同名或同 URL 的 server 已存在就不再推荐；搜索词按名称/标签/URL 过滤。
 export function pendingMcpServerPresets(
   presets: readonly McpServerPreset[],

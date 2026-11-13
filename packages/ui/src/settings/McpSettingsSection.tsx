@@ -35,7 +35,7 @@ import { useZCodeIntl } from "@/i18n/IntlProvider.js";
 import { useConfirmDialog } from "@/hooks/useConfirmDialog.js";
 import { logger } from "@/logger.js";
 import { McpServerForm } from "@/settings/McpServerForm.js";
-import { McpServerList, McpStatusDot } from "@/settings/McpServerList.js";
+import { McpPresetIcon, McpServerList, McpStatusDot } from "@/settings/McpServerList.js";
 import {
   applyMcpServerPreset,
   EMPTY_FORM,
@@ -47,7 +47,6 @@ import {
   type McpServerPreset,
   type ServerScope,
 } from "@/settings/mcpSettingsShared.js";
-import aimlapiLogo from "@/assets/provider-icons/model-provider-aimlapi.svg";
 import { SettingsBreadcrumbReporter } from "@/settings/SettingsHeaderBreadcrumb.js";
 import { SettingsResourceHeaderActions } from "@/settings/SettingsResourceHeaderActions.js";
 import { PluginStoreAvatar } from "@/settings/PluginStoreAvatar.js";
@@ -434,8 +433,6 @@ export function buildPendingMcpOAuthAuthorizationRefreshKey(
   return Array.from(new Set([...localPendingKeys, ...runtimePendingKeys])).join("|");
 }
 
-const MCP_PRESET_LOGOS: Readonly<Record<string, string>> = { aimlapi: aimlapiLogo };
-
 // 预设按插件分组的样式展示：分组标题为预设名称，一行带品牌图标；点「添加」写入当前查看的范围，
 // 之后作为普通已安装 server 出现在上方，预设行随之隐藏。
 function McpPresetRow({
@@ -446,7 +443,6 @@ function McpPresetRow({
   onAdd: (preset: McpServerPreset) => void;
 }) {
   const { intl } = useZCodeIntl();
-  const logo = MCP_PRESET_LOGOS[preset.id];
   const description = intl.formatMessage({ id: "settings.mcp.presets.description" });
   return (
     <SettingsResourceList
@@ -458,14 +454,7 @@ function McpPresetRow({
           data-mcp-preset={item.id}
         >
           <div className="relative size-9 shrink-0" data-mcp-status-dot-placement="icon-corner">
-            <span
-              aria-hidden="true"
-              className="flex size-9 shrink-0 select-none items-center justify-center overflow-hidden rounded-xl bg-background"
-            >
-              {logo ? (
-                <img src={logo} alt="" draggable={false} className="size-full object-contain" />
-              ) : null}
-            </span>
+            <McpPresetIcon presetId={item.id} />
             <span className="absolute -right-1 -bottom-1 flex size-4 items-center justify-center rounded-full bg-background">
               <McpStatusDot disabled reason={description} />
             </span>
