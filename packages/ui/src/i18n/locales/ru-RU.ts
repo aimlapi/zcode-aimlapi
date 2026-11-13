@@ -4113,6 +4113,7 @@ const ruRU: Record<string, string> = {
   "settings.mcp.form.pasteHintSuffix": ".",
   "settings.mcp.form.name": "Имя",
   "settings.mcp.form.type": "Тип",
+  "settings.mcp.form.presets": "Пресеты",
   "settings.mcp.form.timeoutMs": "Таймаут, мс",
   "settings.mcp.form.protocolVersion": "Версия протокола",
   "settings.mcp.form.protocolVersion.auto": "Авто (рекомендуется)",

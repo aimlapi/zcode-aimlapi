@@ -4090,6 +4090,7 @@ const zhCN: Record<string, string> = {
   "settings.mcp.form.pasteHintSuffix": "。",
   "settings.mcp.form.name": "名称",
   "settings.mcp.form.type": "类型",
+  "settings.mcp.form.presets": "预设",
   "settings.mcp.form.timeoutMs": "超时时间 MS",
   "settings.mcp.form.protocolVersion": "协议版本",
   "settings.mcp.form.protocolVersion.auto": "自动（推荐）",

@@ -4138,6 +4138,7 @@ const jaJP: Record<string, string> = {
   "settings.mcp.form.pasteHintSuffix": "。",
   "settings.mcp.form.name": "名前",
   "settings.mcp.form.type": "種類",
+  "settings.mcp.form.presets": "プリセット",
   "settings.mcp.form.timeoutMs": "タイムアウト（ミリ秒）",
   "settings.mcp.form.protocolVersion": "プロトコルバージョン",
   "settings.mcp.form.protocolVersion.auto": "自動（推奨）",

@@ -4380,6 +4380,7 @@ const enUS: Record<string, string> = {
   "settings.mcp.form.pasteHintSuffix": ".",
   "settings.mcp.form.name": "Name",
   "settings.mcp.form.type": "Type",
+  "settings.mcp.form.presets": "Presets",
   "settings.mcp.form.timeoutMs": "Timeout MS",
   "settings.mcp.form.protocolVersion": "Protocol version",
   "settings.mcp.form.protocolVersion.auto": "Auto (recommended)",

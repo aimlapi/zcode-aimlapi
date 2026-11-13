@@ -47,6 +47,38 @@ export const EMPTY_FORM: FormState = {
   protocolVersion: "",
 };
 
+// 新建 MCP server 时可一键填入的预设。只填名称、传输类型和 URL：
+// 鉴权走服务端的 OAuth（或用户自己在 Header 里填 key），预设本身不带任何凭据。
+export interface McpServerPreset {
+  id: string;
+  label: string;
+  docsUrl: string;
+  form: Pick<FormState, "name" | "type" | "url">;
+}
+
+export const MCP_SERVER_PRESETS: readonly McpServerPreset[] = [
+  {
+    id: "aimlapi",
+    label: "AI/ML API",
+    docsUrl: "https://docs.aimlapi.com/quickstart/mcp",
+    form: { name: "aimlapi", type: "http", url: "https://mcp.aimlapi.com/mcp" },
+  },
+];
+
+// 保留用户已选的存放位置、超时与协议版本；清空命令、env、Header 和 OAuth，
+// 避免草稿里为别的 server 填的凭据被带到预设的地址上。
+export function applyMcpServerPreset(form: FormState, preset: McpServerPreset): FormState {
+  return {
+    ...form,
+    ...preset.form,
+    command: "",
+    args: "",
+    env: "",
+    headers: "",
+    oauth: "",
+  };
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }

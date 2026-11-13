@@ -4035,6 +4035,7 @@ const koKR: Record<string, string> = {
   "settings.mcp.form.pasteHintSuffix": ".",
   "settings.mcp.form.name": "이름",
   "settings.mcp.form.type": "유형",
+  "settings.mcp.form.presets": "프리셋",
   "settings.mcp.form.timeoutMs": "시간 제한(ms)",
   "settings.mcp.form.protocolVersion": "프로토콜 버전",
   "settings.mcp.form.protocolVersion.auto": "자동(권장)",
