@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 44,
+  "revision": 45,
   "config": {
     "providerConfigRules": {
       "templateRules": [
@@ -1046,6 +1046,30 @@
               "type": "builtin",
               "key": "opencode"
             }
+          }
+        },
+        {
+          "templateId": "aimlapi",
+          "templateNameMap": {
+            "zh-CN": "AI/ML API",
+            "en-US": "AI/ML API"
+          },
+          "config": {
+            "access": {
+              "type": "api-key",
+              "apiKeyManagementUrl": "https://aimlapi.com/app/keys"
+            },
+            "api": {
+              "type": "openai-chat-completions",
+              "baseUrl": "https://api.aimlapi.com/v1"
+            },
+            "builtinModelIds": [
+              "zhipu/glm-5.3",
+              "deepseek/deepseek-v4-pro",
+              "deepseek/deepseek-v4-flash",
+              "moonshot/kimi-k3",
+              "alibaba/qwen3.8-max"
+            ]
           }
         }
       ],
@@ -7692,6 +7716,156 @@
               },
               "maxOutputTokens": {
                 "max": 98304,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi",
+          "modelId": "zhipu/glm-5.3",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1024000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": false,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsToolCall": true,
+              "supportsJsonSchemaOutput": false,
+              "supportsNativeWebSearch": false
+            },
+            "optionSpecs": {
+              "reasoningLevel": {
+                "values": ["high", "low"],
+                "map": "{\"reasoning_effort\": reasoningLevel}"
+              },
+              "maxOutputTokens": {
+                "max": 131072,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi",
+          "modelId": "deepseek/deepseek-v4-pro",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": false,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsToolCall": true,
+              "supportsJsonSchemaOutput": false,
+              "supportsNativeWebSearch": false
+            },
+            "optionSpecs": {
+              "reasoningLevel": {
+                "values": ["high", "low"],
+                "map": "{\"reasoning_effort\": reasoningLevel}"
+              },
+              "maxOutputTokens": {
+                "max": 384000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi",
+          "modelId": "deepseek/deepseek-v4-flash",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": false,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsToolCall": true,
+              "supportsJsonSchemaOutput": false,
+              "supportsNativeWebSearch": false
+            },
+            "optionSpecs": {
+              "reasoningLevel": {
+                "values": ["high", "low"],
+                "map": "{\"reasoning_effort\": reasoningLevel}"
+              },
+              "maxOutputTokens": {
+                "max": 384000,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi",
+          "modelId": "moonshot/kimi-k3",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1048576,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsToolCall": true,
+              "supportsJsonSchemaOutput": false,
+              "supportsNativeWebSearch": false
+            },
+            "optionSpecs": {
+              "reasoningLevel": {
+                "values": ["high", "low"],
+                "map": "{\"reasoning_effort\": reasoningLevel}"
+              },
+              "maxOutputTokens": {
+                "max": 131072,
+                "map": "{\"max_tokens\": maxOutputTokens}"
+              }
+            }
+          }
+        },
+        {
+          "templateId": "aimlapi",
+          "modelId": "alibaba/qwen3.8-max",
+          "config": {
+            "enabled": true,
+            "properties": {
+              "contextWindow": 1000000,
+              "inputFormat": {
+                "supportsText": true,
+                "supportsImage": true,
+                "supportsVideo": false,
+                "supportsAudio": false,
+                "supportsPdf": false
+              },
+              "supportsToolCall": true,
+              "supportsJsonSchemaOutput": false,
+              "supportsNativeWebSearch": false
+            },
+            "optionSpecs": {
+              "reasoningLevel": {
+                "values": ["high", "low"],
+                "map": "{\"reasoning_effort\": reasoningLevel}"
+              },
+              "maxOutputTokens": {
+                "max": 131072,
                 "map": "{\"max_tokens\": maxOutputTokens}"
               }
             }

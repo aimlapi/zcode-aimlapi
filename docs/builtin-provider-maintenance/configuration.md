@@ -63,7 +63,7 @@ flowchart TD
 
 **模板目录与已添加实例是两个顺序。** `providerConfigRules.templateRules` 数组顺序经 ProviderTemplateMap、ProviderSettingsView 传到添加供应商页面。页面单独提取智谱专区，其他模板保持发布顺序；不增加 Schema 外的 rank/category 字段或第二份运行时排序表。下述类别是维护约定，不表示界面新增分类标题。
 
-1. **智谱专区 → 国内供应商 → 海外原厂 → 聚合平台。** 百炼、TokenHub、方舟归对应国内品牌；独立聚合服务 SiliconFlow、OpenRouter、OpenCode 放在聚合区。
+1. **智谱专区 → 国内供应商 → 海外原厂 → 聚合平台。** 百炼、TokenHub、方舟归对应国内品牌；独立聚合服务 SiliconFlow、OpenRouter、OpenCode、AI/ML API 放在聚合区。
 2. **同品牌连续，普通 API 在前，套餐随后。** Coding/Token/Agent 等产品按下表稳定排列；新产品插在同品牌最相关产品之后，不追加到整个目录末尾。
 3. **先产品，再地区，再协议。** 同产品国内在前、国际在后；普通 API 国内/国际相邻，然后再排套餐。相同产品、地区已有多个协议时固定 Responses → Messages（界面可显示 Anthropic）→ Chat。此顺序不代表性能排名，不新增协议或改变请求路径。
 4. **新品牌进入所属类别尾部，保留已有品牌相对顺序。** 品牌移动、分类调整和排序例外先列具体差异并讨论；确认后同步规范、库存和排序断言。
@@ -71,19 +71,19 @@ flowchart TD
 
 当前品牌块与产品顺序（每行保持连续）：
 
-| 类别       | 品牌                              | 产品入口顺序                                                            |
-| ---------- | --------------------------------- | ----------------------------------------------------------------------- |
-| 智谱专区   | BigModel / Z.ai                   | 保留客户端固定专区顺序，见下文                                          |
-| 国内供应商 | Kimi                              | API → Code 国内 → Code 国际                                             |
-| 国内供应商 | MiniMax                           | API → M Plan                                                            |
-| 国内供应商 | DeepSeek                          | API                                                                     |
-| 国内供应商 | 百炼                              | API 中国 → API 国际 → Coding Plan 中国 → Token Plan 团队版中国          |
-| 国内供应商 | 小米 MiMo                         | API → Token Plan                                                        |
-| 国内供应商 | 腾讯 TokenHub                     | 广州 API（中国站）→ 新加坡 API（中国站）                                                     |
-| 国内供应商 | 火山方舟                          | API → Coding Plan → Agent Plan                                          |
-| 国内供应商 | 阶跃星辰                          | API → Step Plan                                                         |
-| 海外原厂   | OpenAI、Anthropic、xAI            | 按此品牌顺序，各保留已有 API 入口                                       |
-| 聚合平台   | SiliconFlow、OpenRouter、OpenCode | 按此品牌顺序；OpenCode 内先 Go 后 Zen，各按 Responses → Messages → Chat |
+| 类别       | 品牌                                         | 产品入口顺序                                                                               |
+| ---------- | -------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| 智谱专区   | BigModel / Z.ai                              | 保留客户端固定专区顺序，见下文                                                             |
+| 国内供应商 | Kimi                                         | API → Code 国内 → Code 国际                                                                |
+| 国内供应商 | MiniMax                                      | API → M Plan                                                                               |
+| 国内供应商 | DeepSeek                                     | API                                                                                        |
+| 国内供应商 | 百炼                                         | API 中国 → API 国际 → Coding Plan 中国 → Token Plan 团队版中国                             |
+| 国内供应商 | 小米 MiMo                                    | API → Token Plan                                                                           |
+| 国内供应商 | 腾讯 TokenHub                                | 广州 API（中国站）→ 新加坡 API（中国站）                                                   |
+| 国内供应商 | 火山方舟                                     | API → Coding Plan → Agent Plan                                                             |
+| 国内供应商 | 阶跃星辰                                     | API → Step Plan                                                                            |
+| 海外原厂   | OpenAI、Anthropic、xAI                       | 按此品牌顺序，各保留已有 API 入口                                                          |
+| 聚合平台   | SiliconFlow、OpenRouter、OpenCode、AI/ML API | 按此品牌顺序；OpenCode 内先 Go 后 Zen，各按 Responses → Messages → Chat；AI/ML API 仅 Chat |
 
 **智谱专区保留已有例外。** ProviderTemplatePicker 固定显示 BigModel Coding Plan → Z.ai Coding Plan → BigModel API → Z.ai API，不采用 JSON 内这四项的相对顺序。本轮保留四项原始数组顺序和专区 UI 行为，不能声称只改 JSON 就能改变专区次序。“创建自定义供应商”是其他供应商区第一张操作卡，不属于模板排序。
 
